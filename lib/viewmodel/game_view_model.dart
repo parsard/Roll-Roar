@@ -6,12 +6,12 @@ enum GameState { ready, running, finished }
 
 class GameViewModel extends ChangeNotifier {
   List<Animal> animals = [
-    Animal(name: 'Lion', imagePath: '', soundPath: ''),
-    Animal(name: 'Tiger', imagePath: '', soundPath: ''),
-    Animal(name: 'Mouse', imagePath: '', soundPath: ''),
-    Animal(name: 'Eagle', imagePath: '', soundPath: ''),
-    Animal(name: 'Pig', imagePath: '', soundPath: ''),
-    Animal(name: 'Cat', imagePath: '', soundPath: ''),
+    Animal(name: 'Lion', imagePath: 'assets/images/lion.jpg', soundPath: ''),
+    Animal(name: 'Tiger', imagePath: 'assets/images/SC.jpg', soundPath: ''),
+    Animal(name: 'Mouse', imagePath: 'assets/images/TC.jpg', soundPath: ''),
+    Animal(name: 'Eagle', imagePath: 'assets/images/MB.jpg', soundPath: ''),
+    Animal(name: 'Pig', imagePath: 'assets/images/JP.jpg', soundPath: ''),
+    Animal(name: 'Cat', imagePath: 'assets/images/cat.jpg', soundPath: ''),
   ];
   late Animal currentAnimal;
   late List<Animal> choises = [];
@@ -23,6 +23,7 @@ class GameViewModel extends ChangeNotifier {
 
   rollDice() {
     // Logic to roll the dice and update the game state
+    diceValue = Random().nextInt(6) + 1; // Simulate dice roll (1-6)
     notifyListeners(); // Notify listeners to update the UI
   }
 

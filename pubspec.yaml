@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider:
+  flutter_svg:
+  audioplayers:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,9 +61,26 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/cat.jpg
+    - assets/images/JP.jpg
+    - assets/images/lion.jpg
+    - assets/images/MB.jpg
+    - assets/images/SC.jpg
+    - assets/images/TC.jpg
+    - assets/images/dice/dice-six-faces-one.svg
+    - assets/images/dice/dice-six-faces-two.svg
+    - assets/images/dice/dice-six-faces-three.svg
+    - assets/images/dice/dice-six-faces-four.svg
+    - assets/images/dice/dice-six-faces-five.svg
+    - assets/images/dice/dice-six-faces-six.svg
+    - assets/sounds/cat.mp3
+    - assets/sounds/lion.mp3
+    - assets/sounds/mouse.mp3
+    - assets/sounds/tiger.mp3
+    - assets/sounds/eagle.mp3
+    - assets/sounds/pig.mp3
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
