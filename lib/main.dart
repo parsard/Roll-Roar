@@ -7,7 +7,12 @@ void main() {
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => GameViewModel())],
-      child: MaterialApp(title: 'Roll & Roar', home: WelcomeScreen(), debugShowCheckedModeBanner: false),
+      child: MaterialApp(
+        theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
+        title: 'Roll & Roar',
+        home: WelcomeScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
     ),
   );
 }

@@ -11,6 +11,6 @@ class Dice extends StatelessWidget {
     final diceName = names[diceNumber - 1];
 
     final dicePath = 'assets/images/dice/dice-six-faces-$diceName.svg';
-    return SvgPicture.asset(dicePath, width: 200, height: 200);
+    return SvgPicture.asset(dicePath, width: 180, height: 180);
   }
 }

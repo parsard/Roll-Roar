@@ -10,7 +10,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),

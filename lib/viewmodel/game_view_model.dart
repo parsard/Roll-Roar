@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:roll_roar/model/model.dart';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 
 enum GameState { ready, running, finished }
 
 class GameViewModel extends ChangeNotifier {
   List<Animal> animals = [
-    Animal(name: 'Lion', imagePath: 'assets/images/lion.jpg', soundPath: ''),
-    Animal(name: 'Tiger', imagePath: 'assets/images/SC.jpg', soundPath: ''),
-    Animal(name: 'Mouse', imagePath: 'assets/images/TC.jpg', soundPath: ''),
-    Animal(name: 'Eagle', imagePath: 'assets/images/MB.jpg', soundPath: ''),
-    Animal(name: 'Pig', imagePath: 'assets/images/JP.jpg', soundPath: ''),
-    Animal(name: 'Cat', imagePath: 'assets/images/cat.jpg', soundPath: ''),
+    Animal(name: 'Lion', imagePath: 'assets/images/lion.jpg', soundPath: 'sounds/lion.mp3'),
+    Animal(name: 'Tiger', imagePath: 'assets/images/SC.jpg', soundPath: 'sounds/tiger.mp3'),
+    Animal(name: 'Mouse', imagePath: 'assets/images/TC.jpg', soundPath: 'sounds/mouse.mp3'),
+    Animal(name: 'Eagle', imagePath: 'assets/images/MB.jpg', soundPath: 'sounds/eagle.mp3'),
+    Animal(name: 'Pig', imagePath: 'assets/images/JP.jpg', soundPath: 'sounds/pig.mp3'),
+    Animal(name: 'Cat', imagePath: 'assets/images/cat.jpg', soundPath: 'sounds/cat.mp3'),
   ];
+
+  final AudioPlayer _player = AudioPlayer();
   late Animal currentAnimal;
   late List<Animal> choises = [];
   int diceValue = 1;
@@ -21,10 +24,13 @@ class GameViewModel extends ChangeNotifier {
 
   GameViewModel();
 
-  rollDice() {
-    // Logic to roll the dice and update the game state
-    diceValue = Random().nextInt(6) + 1; // Simulate dice roll (1-6)
-    notifyListeners(); // Notify listeners to update the UI
+  Future<void> rollDice() async {
+    _startRound(); // Fill choices and dice for new round
+    notifyListeners();
+    if (currentAnimal.soundPath.isNotEmpty) {
+      await _player.stop();
+      await _player.play(AssetSource(currentAnimal.soundPath));
+    }
   }
 
   startGame() {
@@ -34,20 +40,15 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners(); // Notify listeners to update the UI
   }
 
-  _startRound() {
+  void _startRound() {
     diceValue = Random().nextInt(6) + 1; // Simulate dice roll (1-6)
     currentAnimal = animals[diceValue - 1]; // Select animal based on dice value
-    List<Animal> shuffled = List<Animal>.from(animals)..shuffle();
-
-    if (!shuffled.take(6).contains(currentAnimal)) {
-      shuffled.remove(currentAnimal);
-      shuffled = shuffled.take(5).toList();
-      shuffled.add(currentAnimal);
-      shuffled.shuffle();
-      choises = shuffled; // Add current animal to the choices
-    } else {
-      choises = shuffled.take(6).toList(); // Select 6 random animals
-    }
+    List<Animal> shuffled =
+        List<Animal>.from(animals)
+          ..remove(currentAnimal)
+          ..shuffle();
+    choises = [currentAnimal, ...shuffled.take(3)];
+    choises.shuffle(); // Randomize order
   }
 
   playSound() {
