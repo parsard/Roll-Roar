@@ -27,7 +27,7 @@ class GameScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                if (gameViewModel.state == GameState.running)
+                if (gameViewModel.choises.isNotEmpty)
                   Column(
                     children: [
                       Row(
