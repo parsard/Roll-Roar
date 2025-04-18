@@ -17,8 +17,13 @@ class GameViewModel extends ChangeNotifier {
 
   final AudioPlayer _player = AudioPlayer();
   late Animal currentAnimal;
-  late List<Animal> choises = [];
+  List<Animal> choises = [];
   int diceValue = 1;
+  int correctCount = 0;
+  int wrongCount = 0;
+
+  final String winSound = 'sounds/correct.mp3';
+  final String loseSound = 'sounds/wrong.mp3';
 
   GameState state = GameState.ready;
 
@@ -40,6 +45,15 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners(); // Notify listeners to update the UI
   }
 
+  resetGame() {
+    // Logic to reset the game
+    correctCount = 0;
+    wrongCount = 0;
+    state = GameState.ready;
+    choises.clear(); // Clear choices for new game
+    notifyListeners(); // Notify listeners to update the UI
+  }
+
   void _startRound() {
     diceValue = Random().nextInt(6) + 1; // Simulate dice roll (1-6)
     currentAnimal = animals[diceValue - 1]; // Select animal based on dice value
@@ -51,13 +65,21 @@ class GameViewModel extends ChangeNotifier {
     choises.shuffle(); // Randomize order
   }
 
-  playSound() {
-    // Logic to play sound
-    notifyListeners(); // Notify listeners to update the UI
+  Future<void> playFeedbackSound(bool isWin) async {
+    await _player.stop();
+    String soundPath = isWin ? winSound : loseSound;
+    await _player.play(AssetSource(soundPath));
   }
 
-  selectAnimal() {
+  Future<void> selectAnimal(Animal selectedAnimal) async {
     // Logic to select an animal
+    if (selectedAnimal == currentAnimal) {
+      correctCount++;
+      await playFeedbackSound(true); // Play win sound
+    } else {
+      wrongCount++;
+      await playFeedbackSound(false); // Play lose sound
+    }
     notifyListeners(); // Notify listeners to update the UI
   }
 }

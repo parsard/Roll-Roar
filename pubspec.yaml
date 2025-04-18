@@ -80,6 +80,8 @@ flutter:
     - assets/sounds/tiger.mp3
     - assets/sounds/eagle.mp3
     - assets/sounds/pig.mp3
+    - assets/sounds/correct.mp3
+    - assets/sounds/wrong.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

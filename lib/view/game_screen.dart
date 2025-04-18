@@ -27,30 +27,38 @@ class GameScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                if (gameViewModel.choises.isNotEmpty)
+                if (gameViewModel.state == GameState.running)
                   Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for (int i = 0; i < 2; i++) AnimalChoice(animal: gameViewModel.choises[i], onTap: () {}),
+                          for (int i = 0; i < 2; i++)
+                            AnimalChoice(
+                              animal: gameViewModel.choises[i],
+                              onTap: () => gameViewModel.selectAnimal(gameViewModel.choises[i]),
+                            ),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for (int i = 2; i < 4; i++) AnimalChoice(animal: gameViewModel.choises[i], onTap: () {}),
+                          for (int i = 2; i < 4; i++)
+                            AnimalChoice(
+                              animal: gameViewModel.choises[i],
+                              onTap: () => gameViewModel.selectAnimal(gameViewModel.choises[i]),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Button(text: 'Reset game', onPressed: () {}),
+                      Button(text: 'Reset game', onPressed: () => gameViewModel.resetGame()),
                       const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ScoreShow(text: 'win', score: 12),
+                          ScoreShow(text: 'win', score: gameViewModel.correctCount),
                           const SizedBox(width: 20),
-                          ScoreShow(text: 'lose', score: 8),
+                          ScoreShow(text: 'lose', score: gameViewModel.wrongCount),
                         ],
                       ),
                     ],
