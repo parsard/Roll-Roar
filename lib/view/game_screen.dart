@@ -18,6 +18,11 @@ class GameScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'Guess The Sound',
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                SizedBox(height: 20),
                 Dice(diceNumber: gameViewModel.diceValue), // Displays SVG for current dice value
                 const SizedBox(height: 20),
                 Button(
@@ -36,7 +41,7 @@ class GameScreen extends StatelessWidget {
                           for (int i = 0; i < 2; i++)
                             AnimalChoice(
                               animal: gameViewModel.choises[i],
-                              onTap: () => gameViewModel.selectAnimal(gameViewModel.choises[i]),
+                              onTap: () => gameViewModel.selectAnimal(context, gameViewModel.choises[i]),
                             ),
                         ],
                       ),
@@ -46,7 +51,7 @@ class GameScreen extends StatelessWidget {
                           for (int i = 2; i < 4; i++)
                             AnimalChoice(
                               animal: gameViewModel.choises[i],
-                              onTap: () => gameViewModel.selectAnimal(gameViewModel.choises[i]),
+                              onTap: () => gameViewModel.selectAnimal(context, gameViewModel.choises[i]),
                             ),
                         ],
                       ),

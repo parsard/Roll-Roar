@@ -21,6 +21,7 @@ class GameViewModel extends ChangeNotifier {
   int diceValue = 1;
   int correctCount = 0;
   int wrongCount = 0;
+  bool hasSelected = false;
 
   final String winSound = 'sounds/correct.mp3';
   final String loseSound = 'sounds/wrong.mp3';
@@ -55,6 +56,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void _startRound() {
+    hasSelected = false;
     diceValue = Random().nextInt(6) + 1; // Simulate dice roll (1-6)
     currentAnimal = animals[diceValue - 1]; // Select animal based on dice value
     List<Animal> shuffled =
@@ -71,7 +73,29 @@ class GameViewModel extends ChangeNotifier {
     await _player.play(AssetSource(soundPath));
   }
 
-  Future<void> selectAnimal(Animal selectedAnimal) async {
+  Future<void> selectAnimal(BuildContext context, Animal selectedAnimal) async {
+    if (hasSelected) {
+      ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          content: Text('You have already select an animal'),
+
+          actions: [
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      Future.delayed(Duration(seconds: 2), () {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+      });
+      return;
+    }
+    hasSelected = true;
     // Logic to select an animal
     if (selectedAnimal == currentAnimal) {
       correctCount++;
